@@ -7,6 +7,7 @@ using namespace std;
 
 void print_graph(vector< vector<int> >);
 void bfs(vector< vector<int> >, int); //this function prints the stats as traversing through the graph
+void dfs_iter(vector< vector<int> >, int);
 
 int main(){
   int n;
@@ -34,6 +35,8 @@ int main(){
   int start;
   cout<<"Enter the start node for bfs: "; cin>>start;
   bfs(graph, start);
+  cout<<endl;
+  dfs_iter(graph,start);
 }
 
 void print_graph(vector< vector<int> >g){
@@ -75,5 +78,26 @@ void bfs(vector< vector<int> >g, int start_node){
       cout<<"all nighbours already visited."<<endl;
     }
     processing.pop();
+  }
+}
+
+void dfs_iter(vector< vector<int> >g, int src_node){
+  int n_nodes = g.size();
+  vector<bool> visited(n_nodes,false);
+  stack<int> to_be_visited;
+
+  to_be_visited.push(src_node);
+  visited[src_node] = true;
+  int vertex;
+  while(!to_be_visited.empty()){
+    vertex = to_be_visited.top();
+    to_be_visited.pop();
+    cout<<"Visiting node: "<<vertex<<endl;
+    for(auto itr = g[vertex].begin(); itr != g[vertex].end(); itr++){
+      if(!visited[*itr]){
+        to_be_visited.push(*itr);
+        visited[*itr] = true;
+      }
+    }
   }
 }
